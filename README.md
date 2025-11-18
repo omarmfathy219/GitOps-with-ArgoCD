@@ -106,7 +106,7 @@ GitOps-with-ArgoCD/
 3. **Self-Healing** - Watch ArgoCD revert manual cluster changes
 4. **Drift Detection** - See immediate visibility when cluster != Git
 5. **Rollback** - Instant rollback to any previous version
-6. **Multi-Environment** - Same manifests, different environments
+6. **Beautiful UI** - Visual resource tree and deployment status
 
 ## 🎯 Demo Scenarios
 

@@ -95,16 +95,6 @@ git push
 3. Click "ROLLBACK"
 4. Watch instant rollback
 
-### 6. Multi-Environment (Optional)
-
-```bash
-# Deploy to staging
-kubectl apply -f argocd-demo/applications/guestbook-staging.yaml
-
-# Deploy to production (manual sync)
-kubectl apply -f argocd-demo/applications/guestbook-production.yaml
-```
-
 ---
 
 ## 💡 Key Points to Demonstrate
@@ -115,6 +105,7 @@ kubectl apply -f argocd-demo/applications/guestbook-production.yaml
 4. **Visibility** - Beautiful UI with resource tree
 5. **Rollback** - One-click rollback to any version
 6. **Audit Trail** - All changes tracked with Git commits
+7. **Declarative** - Everything defined as code
 
 ---
 
@@ -137,7 +128,9 @@ kubectl delete namespace staging production
 ```
 argocd-demo/
 ├── README.md                          # This file
+├── DEMO-CHECKLIST.md                  # Step-by-step checklist
 ├── QUICK-REFERENCE.md                 # Quick command reference
+├── argocd-ingress.yaml                # Ingress example
 ├── guestbook/                         # Application manifests
 │   ├── namespace.yaml
 │   ├── guestbook-ui-deployment.yaml
@@ -145,8 +138,6 @@ argocd-demo/
 │   ├── redis-deployment.yaml
 │   └── redis-service.yaml
 └── applications/                      # ArgoCD Application CRDs
-    ├── guestbook-app.yaml             # Main demo
-    ├── guestbook-staging.yaml         # Staging env
-    └── guestbook-production.yaml      # Production env
+    └── guestbook-app.yaml             # Demo application
 ```
 
