@@ -47,11 +47,11 @@ spec:
         maxDuration: 3m
 
   # Will ignore differences in these fields
-  ignoreDifferences:
-    - group: apps
-      kind: Deployment
-      jsonPointers:
-        - /spec/replicas  # Remove this if you want ArgoCD to manage replicas strictly
+  # ignoreDifferences:
+  #   - group: apps
+  #     kind: Deployment
+  #     jsonPointers:
+  #       - /spec/replicas
 
   # Health check configuration
   revisionHistoryLimit: 10
