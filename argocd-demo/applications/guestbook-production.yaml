@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: guestbook-production
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    app: guestbook
+    environment: production
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/omarmfathy219/GitOps-with-ArgoCD.git
+    targetRevision: HEAD
+    path: argocd-demo/guestbook
+    # Production might use different branch or tag
+    # targetRevision: v1.0.0
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: production
+
+  syncPolicy:
+    # Production: Manual sync for more control
+    # automated:
+    #   prune: false
+    #   selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: 3
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+
+  # Production: More conservative settings
+  revisionHistoryLimit: 20
+

@@ -1,0 +1,58 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: guestbook
+  namespace: argocd
+  # Finalizer that ensures cascading delete of the application resources
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    app: guestbook
+    environment: demo
+spec:
+  # The project the application belongs to
+  project: default
+
+  # Source of the application manifests
+  source:
+    repoURL: https://github.com/omarmfathy219/GitOps-with-ArgoCD.git
+    targetRevision: HEAD
+    path: argocd-demo/guestbook
+
+  # Destination cluster and namespace to deploy the application
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: demo
+
+  # Sync policy
+  syncPolicy:
+    # Automated sync options
+    automated:
+      prune: true      # Automatically delete resources that are no longer in Git
+      selfHeal: true   # Automatically sync when cluster state differs from Git
+      allowEmpty: false
+    
+    # Sync options
+    syncOptions:
+      - CreateNamespace=true  # Create namespace if it doesn't exist
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+    
+    # Retry policy
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+
+  # Will ignore differences in these fields
+  ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      jsonPointers:
+        - /spec/replicas  # Remove this if you want ArgoCD to manage replicas strictly
+
+  # Health check configuration
+  revisionHistoryLimit: 10
+

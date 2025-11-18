@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: guestbook-staging
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    app: guestbook
+    environment: staging
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/omarmfathy219/GitOps-with-ArgoCD.git
+    targetRevision: HEAD
+    path: argocd-demo/guestbook
+    # Kustomize overlay (optional - for multi-environment)
+    # kustomize:
+    #   namePrefix: staging-
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: staging
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: 3
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 2m
+
