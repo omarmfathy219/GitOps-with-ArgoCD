@@ -130,7 +130,6 @@ argocd-demo/
 ├── README.md                          # This file
 ├── DEMO-CHECKLIST.md                  # Step-by-step checklist
 ├── QUICK-REFERENCE.md                 # Quick command reference
-├── argocd-ingress.yaml                # Ingress example
 ├── guestbook/                         # Application manifests
 │   ├── namespace.yaml
 │   ├── guestbook-ui-deployment.yaml
